@@ -1,0 +1,240 @@
+<!--
+  login form validation
+  <form [formGroup]="loginForm" novalidate>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email" class="form-label mt-4">Email address</label>
+        <input type="email"
+        class="form-control"
+         id="email" name="email"
+          aria-describedby="emailHelp"
+          autocomplete="off"
+           placeholder="Enter email"
+           formControlName="email"
+           />
+
+           <div *ngIf="!Email?.valid && Email.dirty" class="text-danger">
+               
+            <div *ngIf="Email.errors?.required">Email is required</div>
+            <div *ngIf="Email.errors?.minlength">Minimum characters required is 6</div>
+            <div *ngIf="Email.errors?.email">Email should have alphanumeric,@,.,com</div>
+           </div> 
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label mt-4">Password</label>
+        <input type="password"
+        class="form-control"
+         id="password" name="password"
+          aria-describedby="passwordHelp"
+          autocomplete="off"
+           placeholder="Enter password"
+           formControlName="password"
+           />
+           <div *ngIf="!passWord?.valid && passWord.dirty" class="text-danger">
+            <div *ngIf="passWord.errors?.required">passWord is required</div>
+            <div *ngIf="passWord.errors?.maxlength">passWord cannot exceed 10 characters</div>
+            <div *ngIf="passWord.errors?.minlength">Minimum characters required for passWord is 6</div>
+            <div *ngIf="passWord.errors?.pattern">passWord should be alphanumeric with atleast one special character</div>
+           </div>
+
+      </div>
+      <div class="form-group">
+          <label for="country"
+          class="form-label mt-4">Country</label>
+          <select
+          id="country"
+          name="country"
+          class="form-select">
+        <option value="">Select Country</option>
+        <option *ngFor="let c of countryList" [value]="c.code">{{c.name}}</option></select>
+        {{userProfile.country}}
+      </div>
+
+
+      <fieldset class="form-group">
+        <legend class="mt-4">Gender</legend>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input"
+             name="gender" id="genderMale" value="M"
+             formControlName="gender"
+              [checked]="userProfile.gender=='M'">
+           Male
+          </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input"
+               name="gender" id="genderFemale" value="F"
+               formControlName="gender"
+                [checked]="userProfile.gender=='F'">
+             Female
+            </label>
+          </div>
+        
+      </fieldset>
+
+
+      <div class="form-group mt-3">
+        <button type="button" (click)="handleRegister()"
+        class="btn btn-primary">Register</button>
+      </div>
+   </div>   
+  </form>
+-->
+
+<!--last code .1
+upper code .2
+below code .3-->
+<form>
+    
+  <div class="col-md-4 offset-md-3">
+      <div *ngIf="apiResult.error" class="alert alert-danger mt-3" role="alert">
+          We are unable to process your request. Please try later.
+       </div>
+       <div *ngIf="apiResult.success" class="alert alert-success mt-3" role="alert">
+              Your registration is completed. Please verify your email.
+       </div>
+      <div class="form-group">
+          <label for="email" class="form-label mt-4">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+              placeholder="Enter email" [(ngModel)]="userProfile.email">
+      </div>
+      <div class="form-group" hover
+      >
+          <label for="password" class="form-label mt-4">Password</label>
+          <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp"
+              placeholder="Enter Password" [(ngModel)]="userProfile.password">
+      </div>
+
+      <!--//validInput pattern ="/^[0-9]{1,100}/"-->
+      <div class="form-group">
+          <label for="phone" class="form-label mt-4">Phone</label>
+          <input type="tel" numbersOnly
+          class="form-control" id="phono" name="phone" aria-describedby="passwordHelp"
+              placeholder="Enter Phone Number" [(ngModel)]="userProfile.phone">
+      </div>
+      <fieldset class="form-group">
+          <label class="mt-4 form-label">Gender</label>
+          <div class="form-check">
+              <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="gender" id="genderMale" value="M"
+                      [(ngModel)]="userProfile.gender" [checked]="userProfile.gender=='M'">
+                  Male
+              </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="gender" id="genderFemale" value="F"
+                    [(ngModel)]="userProfile.gender" [checked]="userProfile.gender=='F'">
+                Female
+            </label>
+        </div>
+    </fieldset>
+    <!--Receive data from child-->
+    <app-dropdown 
+    [schema]="countryDropdownSchema"
+    (handleChange)="countrySelected($event)"></app-dropdown>
+    <div class="form-group mt-3">
+        <button type="button" (click)="handleRegister()" class="btn btn-primary">Register</button>
+    </div>
+</div>
+</form>
+<!--
+<pre>{{userProfile|json}}</pre>
+-->
+
+<!--
+for NGMODEL Modification remove ngModel and add [FORMGROUP] at top in<form>
+    and add formcontrolname as well ************************
+ngModels name is now formControlName!!!!!!!!!!!!!!
+
+
+    <form [formGroup]="loginForm" novalidate>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="email" class="form-label mt-4">Email address</label>
+        <input type="email"
+        class="form-control"
+         id="email" name="email"
+          aria-describedby="emailHelp"
+          autocomplete="off"
+           placeholder="Enter email"
+
+           [(ngModel)]="userProfile.email"
+           >{{userProfile.email}}
+
+           <div *ngIf="!Email?.valid && Email.dirty" class="text-danger">
+               
+            <div *ngIf="Email.errors?.required">Email is required</div>
+            <div *ngIf="Email.errors?.maxlength">Email cannot exceed 10 characters</div>
+            <div *ngIf="Email.errors?.minlength">Minimum characters required is 6</div>
+            <div *ngIf="Email.errors?.pattern">Email should be alphanumeric</div>
+           </div> 
+      </div>
+      <div class="form-group">
+        <label for="password" class="form-label mt-4">Password</label>
+        <input type="password"
+        class="form-control"
+         id="password" name="password"
+          aria-describedby="passwordHelp"
+          autocomplete="off"
+           placeholder="Enter password"
+           [(ngModel)]="userProfile.password"
+           />
+
+           <div *ngIf="!passWord?.valid && passWord.dirty" class="text-danger">
+            <div *ngIf="passWord.errors?.required">passWord is required</div>
+            <div *ngIf="passWord.errors?.maxlength">passWord cannot exceed 10 characters</div>
+            <div *ngIf="passWord.errors?.minlength">Minimum characters required for passWord is 6</div>
+            <div *ngIf="passWord.errors?.pattern">passWord should be alphanumeric with atleast one special character</div>
+           </div>
+        
+      </div>
+      <div class="form-group">
+          <label for="country"
+          class="form-label mt-4">Country</label>
+          <select
+          id="country"
+          name="country"
+          class="form-select"
+          [(ngModel)]="userProfile.country">
+        <option value="">Select Country</option>
+        <option *ngFor="let c of countryList" [value]="c.code">{{c.name}}</option></select>
+        {{userProfile.country}}
+      </div>
+
+
+      <fieldset class="form-group">
+        <legend class="mt-4">Gender</legend>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input"
+             name="gender" id="genderMale" value="M"
+             [(ngModel)]="userProfile.gender" [checked]="userProfile.gender=='M'">
+           Male
+          </label>
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input"
+               name="gender" id="genderFemale" value="F"
+               [(ngModel)]="userProfile.gender" [checked]="userProfile.gender=='F'">
+             Female
+            </label>
+          </div>
+        
+      </fieldset>
+
+
+      <div class="form-group mt-3">
+        <button type="button" (click)="handleRegister()"
+        class="btn btn-primary">Register</button>
+      </div>
+   </div>   
+  </form>
+
+  <pre>{{userProfile|json}}</pre>
+
+  
+-->

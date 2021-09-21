@@ -1,0 +1,41 @@
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+    <li class="nav-item" *ngFor="let item of navitems">
+      
+      <a class="nav-link" [routerLink]="item.link">{{item.text|uppercase}}</a>
+    </li>
+
+    <li class="nav-item">
+      
+      <a class="nav-link" [routerLink]="'cart'"> Cart {{cartCount}}</a>
+    </li>
+
+    <li class="nav-item" >
+     <!-- <a class="nav-link" >{{currentDate}}</a>-->
+
+     
+     <a class="nav-link" >{{currentDate|date:'MM/dd/yyyy hh:mm:ss'}}</a>
+     <!-- <a class="nav-link" >{{currentDate|date:'short'}}</a>>-->
+     <!-- <a class="nav-link" >{{currentDate|date:'medium'}}</a>-->
+     <!-- <a class="nav-link" >{{currentDate|date:'long'}}</a>-->
+     <!-- <a class="nav-link" >{{currentDate|date:'dd/MM/yyyy'}}</a>   mm is used for minutes, MMMM - full name of month, 
+        MMM- Sep
+    -->
+    PHONE
+    <a class="nav-link" >{{phone|phoneformatter:'IN'}}</a>
+   <!--  <a class="nav-link">{{price|currency:'EUR,GBP,YEN,AUD'}}</a>-->
+     <!--<a class="nav-link">{{price|currency}}</a>-->
+     <a class="nav-link">{{21.45 | currency:'USD'}}</a>
+
+    </li>
+
+    <li class ="nav-item">
+
+      <select id="country" name="country" lass="form-select" [(ngModel)]="country">
+        
+        <option value="">Select Country</option>
+        <option *ngFor="let c of countryList" [value]="c.code">{{c.name}}</option>
+      </select>
+    </li>
+
+  </ul>
